@@ -1,0 +1,56 @@
+
+<div class="workplace">
+  <!--<form>-->
+    <!--<div class="form-group">-->
+      <!--<h4>Председатель комиссии</h4>-->
+      <!--<select class="form-control pred" [disabled]="!auto_check">-->
+        <!--<option *ngFor="let comission of comissions_pred" [value]="comission.code">-->
+          <!--{{ comission.fio }}-->
+        <!--</option>-->
+      <!--</select>-->
+      <!--<input type="checkbox" [(ngModel)]="auto_check" name="auto_check"> Выбрать вручную-->
+    <!--</div>-->
+  <!--</form>-->
+  <h5>Список студентов группы: {{ group.group }}</h5>
+  <div align="center" class="table-responsive">
+    <table class="table">
+      <thead class="thead-light">
+      <tr class="active">
+        <th scope="col">№ п/п</th>
+        <th scope="col">Фамилия И.О.</th>
+        <th scope="col" class="text-center first">Вопрос №1</th>
+        <th scope="col" class="text-center">Вопрос №2</th>
+        <th scope="col" class="text-center">Вопрос №3</th>
+        <th scope="col" class="text-center">Член комиссии</th>
+        <th scope="col" class="text-center">Итоговая оценка</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students_local; index as i">
+        <th scope="col">{{ i + 1 }}</th>
+        <td>{{ student.fio }}</td>
+        <td class="text-center">
+          <input (keypress)="ReplaceNumberFirst($event, student)" [(ngModel)]="student.first">
+        </td>
+        <td class="text-center">
+          <input (keypress)="ReplaceNumberSecond($event, student)" [(ngModel)]="student.second">
+        </td>
+        <td class="text-center">
+          <input (keypress)="ReplaceNumberThird($event, student)" [(ngModel)]="student.third">
+        </td>
+        <td class="text-center">
+          <select class="form-control" (change)="SetComission($event, student)" [ngModel]="student.comission">
+            <option [value]="null"></option>
+            <option *ngFor="let comission of student.comissions" [value]="comission">
+              {{ comission }}
+            </option>
+          </select>
+        </td>
+        <td class="text-center">
+          <input (keypress)="ReplaceNumberResult($event, student)" [(ngModel)]="student.result">
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

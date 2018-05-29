@@ -1,0 +1,34 @@
+
+<div class="row">
+  <div class="col-md-2">
+    <h6 class="text-info">Дата проведения:</h6>
+    <input type="date" class="form-control" [(ngModel)]="date" (change)="GetGroups()">
+    <h6 class="text-info">Группа:</h6>
+    <select class="form-control" (change)="SetGroup($event)">
+      <option *ngFor="let group of group_list" [value]="group.code">
+        {{ group.group }}
+      </option>
+    </select>
+    <hr>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation" class="dropdown-header">Главное меню</li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('m')">Главная</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('e')">Оценочный лист</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('q')">Фиксация вопросов</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('p')">Протокол заседания</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('v')">Выписка из протоколов</a></li>
+      <hr>
+      <li role="presentation" class="dropdown-header">Дополнительная информация</li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('h')">Помощь</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-10" ngSwitch="'{{ root }}'">
+    <ng-template ngSwitchCase="'m'"><app-qualify-work-sec-main></app-qualify-work-sec-main></ng-template>
+    <ng-template ngSwitchCase="'e'"><app-qualify-work-sec-evaluation [group] = "group" [comission_list]="comission_list" [students]="students_list"></app-qualify-work-sec-evaluation></ng-template>
+    <ng-template ngSwitchCase="'q'"><app-qualify-work-sec-questions></app-qualify-work-sec-questions></ng-template>
+    <ng-template ngSwitchCase="'p'"><app-qualify-work-sec-protocol></app-qualify-work-sec-protocol></ng-template>
+    <ng-template ngSwitchCase="'v'"><app-qualify-work-sec-vipiska></app-qualify-work-sec-vipiska></ng-template>
+    <ng-template ngSwitchCase="'h'"><app-qualify-work-sec-help></app-qualify-work-sec-help></ng-template>
+  </div>
+</div>

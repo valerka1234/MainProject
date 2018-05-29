@@ -1,0 +1,62 @@
+
+<div class="workplace">
+  <h5>Список студентов группы: {{ group.group }}</h5>
+  <span class="help-block">Укажите у каждого студента номер вытянутого билета</span>
+  <div align="center" class="table-responsive">
+    <table class="table">
+      <thead class="thead-light">
+      <tr class="active">
+        <th scope="col" class="text-center">№ п/п</th>
+        <th scope="col">Фамилия И.О.</th>
+        <th scope="col" class="text-center">№ билета</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students_list; index as i">
+        <th scope="col" class="text-center">{{ i + 1 }}</th>
+        <td>{{ student.fio }}</td>
+        <td class="text-center">
+          <select class="form-control text-center" (change)="SetTicket($event, student)" [ngModel]="student.ticket">
+            <option [value]='0'></option>
+            <option *ngFor="let ticket of student.tickets" [value]="ticket">
+              {{ ticket }}
+            </option>
+          </select>
+        </td>
+        <td class="text-center">
+          <button class="btn btn-primary btn-sm" data-toggle="modal" data-placement="bottom" title="Просмотр информации о билете" data-target="#myModal"
+            (click)="ShowTicketInfo(student)"
+            [disabled]="student.ticket === 0"
+          >
+            <i class="fas fa-list-alt"></i> Информация о билете
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- Модальное (всплывающее) окно -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Окно просмотра информации о билете</h4>
+      </div>
+      <div class="modal-body">
+        <h3>Фио студента: {{ student.fio }}</h3>
+        <h5>Номер билета: {{ticket.number}}</h5>
+        <p>Вопрос 1: {{ticket.first_question}}</p>
+        <p>Вопрос 2: {{ticket.second_question}}</p>
+        <p>Вопрос 3: {{ticket.third_question}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>

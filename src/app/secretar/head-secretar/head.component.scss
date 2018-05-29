@@ -1,0 +1,29 @@
+
+.navbar-collapse {
+  background-image: linear-gradient(to bottom, #6d6d6d 0, #8e8e8e 100%);
+  display: inline;
+}
+
+.navbar-nav {
+  width: auto;
+  padding-left: 150px;
+}
+
+li {
+  width: auto;
+  text-align: center;
+  margin: 0px 40px;
+}
+
+.nav-link:hover {
+  color: #d1d19b;
+}
+
+.nav-link:focus {
+  color: #d19f3d;
+}
+
+a {
+  color: #e1e1e1;
+}
+

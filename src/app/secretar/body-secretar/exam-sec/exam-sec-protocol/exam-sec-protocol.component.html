@@ -1,0 +1,59 @@
+
+<div class="workplace">
+  <form>
+    <div class="form-group">
+      <h4>Номер приказа</h4>
+      <input class="form-control num" placeholder="Номер приказа" [(ngModel)]="order_num" name="num">
+    </div>
+    <div class="form-group">
+      <h4>Дата приказа</h4>
+      <input class="form-control date" type="date" placeholder="Дата приказа" [(ngModel)]="order_date" name="num" >
+    </div>
+  </form>
+  <form>
+    <div class="form-group">
+      <h4>Стартовый номер протокола</h4>
+      <input class="form-control protocol" type="number" placeholder="Начинать с ..." [(ngModel)]="start_protocol" min="1" name="num" [disabled]="!auto_check">
+      <div class="checkbox">
+        <input type="checkbox" [(ngModel)]="auto_check" name="auto_check"> Выбрать вручную
+      </div>
+    </div>
+  </form>
+  <h5>Список студентов группы: {{ group.group }}</h5>
+  <div align="center" class="table-responsive">
+    <table class="table">
+      <thead class="thead-light">
+      <tr class="active">
+        <th scope="col">№ п/п</th>
+        <th scope="col">Фамилия И.О.</th>
+        <th scope="col" class="text-center">№ билета</th>
+        <th scope="col" class="itog">Итоговая оценка</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students_list; index as i">
+        <th scope="col">{{ i + 1 }}</th>
+        <td>{{ student.fio }}</td>
+        <td class="text-center">{{ student.ticket }}</td>
+        <td class="text-center">{{ student.result }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <span class="help-block">По студентам, имеющим итоговую оценку, можно сформировать протокол заседания</span>
+  </div>
+
+  <button type="button" class="btn btn-warning"
+    *ngIf="students.length > 0"
+    (click)="CreateProtocol()"
+  >
+    Сформировать протокол заседания
+  </button>
+  <div
+    ngSwitch="'{{ result.status }}'"
+  >
+    <ng-template ngSwitchCase="'true'"><span class="text-success">Протоколы выгружены успешно</span></ng-template>
+    <ng-template ngSwitchCase="false"><span class="text-danger">При выгрузке произошла ошибка. Повторите попытку</span></ng-template>
+    <ng-template ngSwitchDefault=""></ng-template>
+
+  </div>
+</div>

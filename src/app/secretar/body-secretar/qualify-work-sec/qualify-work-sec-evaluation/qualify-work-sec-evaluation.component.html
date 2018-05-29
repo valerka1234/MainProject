@@ -1,0 +1,115 @@
+
+<div class="workplace">
+  <h5>Полный состав комиссии на группу: {{ group.group }}</h5>
+  <div align="center" class="table-responsive">
+    <table class="table">
+      <thead class="thead-light">
+      <tr class="active">
+        <th scope="col">№ п/п</th>
+        <th scope="col">Фамилия И.О.</th>
+        <th scope="col" class="th-check"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let person of comissions; index as i">
+        <th scope="col">{{ i + 1 }}</th>
+        <td>{{ person.fio }}</td>
+        <td>
+          <button class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Добавить в список присутствующих"
+            (click)="CheckComission(person)"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <span class="help-block">Отметьте всех членов комиссии, присутствующих на процедуре проведения защиты ВКР</span>
+  </div>
+
+  <hr>
+
+  <div
+    *ngIf="comissions_check.length > 0"
+  >
+    <h5>Список присутствующих в составе комиссии</h5>
+    <div align="center" class="table-responsive">
+      <table class="table">
+        <thead class="thead-light">
+        <tr class="active">
+          <th scope="col">№ п/п</th>
+          <th scope="col">Фамилия И.О.</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let person of comissions_check | orderBy:'fio'; index as i">
+          <th scope="col">{{ i + 1 }}</th>
+          <td>{{ person.fio }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-placement="bottom" title="Просмотр выставленных оценок" data-target="#myModal"
+              (click)="ShowRating(person)"
+            >
+              <i class="fas fa-list-alt"></i> Просмотр оценок
+            </button>
+            <button class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Удалить из списка присутствующий"
+              (click)="UnCheckComission(person)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <span class="help-block">Для присутствующих членов комиссии будут сформированы оценочные листы</span>
+    </div>
+
+    <button type="button" class="btn btn-warning">
+      Сформировать оценочные листы
+    </button>
+  </div>
+
+</div>
+
+<!-- Модальное (всплывающее) окно -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Окно просмотра выставленных оценок выбранным членом комиссии</h4>
+      </div>
+      <div class="modal-body">
+        <h3>Член комиссии: {{ comission_person.fio }}</h3>
+        <table class="table table-hover">
+          <thead>
+          <tr class="active">
+            <th>№ п/п</th>
+            <th>Фамилия И.О.</th>
+            <th>Вопрос 1</th>
+            <th>Вопрос 2</th>
+            <th>Вопрос 3</th>
+            <th>Средняя</th>
+            <th>Итоговая</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let student of students_list; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ student.fio }}</td>
+            <td>{{ student.first_rate }}</td>
+            <td>{{ student.second_rate }}</td>
+            <td>{{ student.third_rate }}</td>
+            <td>{{ student.avg_rate }}</td>
+            <td class="red_text">{{ student.result_rate }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

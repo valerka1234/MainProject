@@ -1,0 +1,36 @@
+
+<div class="row">
+  <div class="col-md-2 bd-sidebar">
+    <h6 class="text-info">Дата проведения:</h6>
+    <input type="date" class="form-control" [(ngModel)]="date" (change)="GetGroups()">
+    <h6 class="text-info">Группа:</h6>
+    <select class="form-control" (change)="SelectGroup($event)">
+      <option *ngFor="let group of group_list" [value]="group.code">
+        {{ group.group }}
+      </option>
+    </select>
+    <hr>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation" class="dropdown-header">Главное меню</li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('m')">Главная</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('c')">Формирование билетов</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('d')">Распределение билетов</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('g')">Выставление оценок</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('e')">Оценочный лист</a></li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('p')">Протокол заседания</a></li>
+      <hr>
+      <li role="presentation" class="dropdown-header">Дополнительная информация</li>
+      <li role="presentation"><a class="text-info" role="menuitem" tabindex="-1" (click)="SetRoot('h')">Помощь</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-10" ngSwitch="'{{ root }}'">
+    <ng-template ngSwitchCase="'m'"><app-exam-sec-main></app-exam-sec-main></ng-template>
+    <ng-template ngSwitchCase="'c'"><app-exam-sec-create></app-exam-sec-create></ng-template>
+    <ng-template ngSwitchCase="'d'"><app-exam-sec-distribute [group]="group" [students]="students" [tickets]="ticket_group" (OnReturnStudents)="OnReturnStudents($event)"></app-exam-sec-distribute></ng-template>
+    <ng-template ngSwitchCase="'g'"><app-exam-sec-grading [group]="group" [students]="students" [comissions]="comissions" (OnReturnStudents)="OnReturnStudents($event)"></app-exam-sec-grading></ng-template>
+    <ng-template ngSwitchCase="'e'"><app-exam-sec-evaluation [group] = "group" [comission_list]="comission_list" [students]="students"></app-exam-sec-evaluation></ng-template>
+    <ng-template ngSwitchCase="'p'"><app-exam-sec-protocol [date]="date" [group]="group" [students]="students" [comissions]="comissions" [tickets]="ticket_group"></app-exam-sec-protocol></ng-template>
+    <ng-template ngSwitchCase="'h'"><app-exam-sec-help></app-exam-sec-help></ng-template>
+  </div>
+</div>
