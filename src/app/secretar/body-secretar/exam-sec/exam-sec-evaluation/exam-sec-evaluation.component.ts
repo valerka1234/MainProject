@@ -316,6 +316,7 @@ export class ExamSecEvaluationComponent implements OnInit, OnChanges {
     moment.locale('ru');
     this.info.date = this.group.date_exam
       .map(date => moment(date).format('LL'));
+    // this.info.date.splice(0, 1);
 
     this.comissions_check.map(comission => {
       this.ShowRating(comission);
