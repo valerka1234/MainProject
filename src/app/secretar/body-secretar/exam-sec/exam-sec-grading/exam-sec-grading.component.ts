@@ -122,14 +122,13 @@ export class ExamSecGradingComponent implements OnInit, OnChanges {
   }
 
   ReplaceNumberFirst(key, student) {
-    console.log(student);
     if (['Backspace', 'Delete', '1', '2', '3', '4', '5', 'Tab'].includes(key.key)) {
       if ( isNullOrUndefined(student.first) || student.first === '' && ['1', '2', '3', '4', '5'].includes(key.key) ) {
         if ( isNullOrUndefined(student.comission) === true ) {
-          console.log('true');
           student.comission = this.comissions[0].fio;
         }
-        this.appService.CreateRanks(student.code, this.comissions.find(comission => comission.fio === student.comission).id_comission, Number(key.key), '1')
+        this.appService.CreateRanks(student.code, this.comissions
+          .find(comission => comission.fio === student.comission).id_comission, Number(key.key), '1')
           .subscribe(response => {
             console.log(response);
           });
@@ -143,7 +142,7 @@ export class ExamSecGradingComponent implements OnInit, OnChanges {
         }
         student.first = null;
       }
-      if ( isNullOrUndefined(student.first) !== true || student.first === '' && ['Backspace', 'Delete'].includes(key.key) ) {
+      if ( ( isNullOrUndefined(student.first) !== true || student.first === '' ) && ['Backspace', 'Delete'].includes(key.key) ) {
         this.appService.DeleteRanks(student.code, '1')
           .subscribe(response => {
             console.log(response);
@@ -160,10 +159,10 @@ export class ExamSecGradingComponent implements OnInit, OnChanges {
     if (['Backspace', 'Delete', '1', '2', '3', '4', '5', 'Tab'].includes(key.key)) {
       if ( isNullOrUndefined(student.second) || student.second === '' && ['1', '2', '3', '4', '5'].includes(key.key) ) {
         if ( isNullOrUndefined(student.comission) === true ) {
-          console.log('true');
           student.comission = this.comissions[0].fio;
         }
-        this.appService.CreateRanks(student.code, this.comissions.find(comission => comission.fio === student.comission).id_comission, Number(key.key), '2')
+        this.appService.CreateRanks(student.code, this.comissions
+          .find(comission => comission.fio === student.comission).id_comission, Number(key.key), '2')
           .subscribe(response => {
             console.log(response);
           });
@@ -177,7 +176,7 @@ export class ExamSecGradingComponent implements OnInit, OnChanges {
         }
         student.second = null;
       }
-      if ( isNullOrUndefined(student.second) !== true || student.second === '' && ['Backspace', 'Delete'].includes(key.key) ) {
+      if ( ( isNullOrUndefined(student.second) !== true || student.second === '' ) && ['Backspace', 'Delete'].includes(key.key) ) {
         this.appService.DeleteRanks(student.code, '2')
           .subscribe(response => {
             console.log(response);
@@ -194,10 +193,10 @@ export class ExamSecGradingComponent implements OnInit, OnChanges {
     if (['Backspace', 'Delete', '1', '2', '3', '4', '5', 'Tab'].includes(key.key)) {
       if ( ( isNullOrUndefined(student.third) || student.third === '' ) && ['1', '2', '3', '4', '5'].includes(key.key) ) {
         if ( isNullOrUndefined(student.comission) === true ) {
-          console.log('true');
           student.comission = this.comissions[0].fio;
         }
-        this.appService.CreateRanks(student.code, this.comissions.find(comission => comission.fio === student.comission).id_comission, Number(key.key), '3')
+        this.appService.CreateRanks(student.code, this.comissions
+          .find(comission => comission.fio === student.comission).id_comission, Number(key.key), '3')
           .subscribe(response => {
             console.log(response);
           });
@@ -225,7 +224,6 @@ export class ExamSecGradingComponent implements OnInit, OnChanges {
   }
 
   ReplaceNumberResult(key, student) {
-    console.log(student);
     if (['Backspace', 'Delete', '1', '2', '3', '4', '5', 'Tab'].includes(key.key)) {
       this.result = null;
       if ( ['1', '2', '3', '4', '5'].includes(key.key) ) {

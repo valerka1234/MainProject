@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { isNullOrUndefined } from 'util';
 import { AppServiceService } from '../../../../app-service.service';
 
@@ -7,11 +7,12 @@ import { AppServiceService } from '../../../../app-service.service';
   templateUrl: './exam-sec-distribute.component.html',
   styleUrls: ['./exam-sec-distribute.component.scss', '../exam-sec.component.scss']
 })
-export class ExamSecDistributeComponent implements OnChanges {
+export class ExamSecDistributeComponent implements OnInit, OnChanges {
 
   @Input() group: any;
-  @Input() students: [ { code: string, fio: string, protocol: number, result: number, ticket: number } ];
-  @Input() tickets: [ { number: number, first_question: string, second_question: string, third_question: string } ];
+  @Input() students: any;
+  @Input() tickets: any;
+
 
   @Output() OnReturnStudents = new EventEmitter<any>();
 
@@ -22,6 +23,10 @@ export class ExamSecDistributeComponent implements OnChanges {
   constructor(
     private appService: AppServiceService
   ) { }
+
+  ngOnInit() {
+    this.Initialisation();
+  }
 
   ngOnChanges() {
     this.Initialisation();
@@ -62,18 +67,17 @@ export class ExamSecDistributeComponent implements OnChanges {
   }
 
   GetTickets() {
-    if ( isNullOrUndefined(this.tickets) !== true) {
-      this.students_list = this.students.map(student => {
-        return {
-          code: student.code,
-          fio: student.fio,
-          protocol: student.protocol,
-          result: student.result,
-          ticket: isNullOrUndefined(student.ticket) ? 0 : student.ticket,
-          tickets: this.tickets.map(ticket => ticket.number)
-        };
-      });
-    }
+    this.students_list = [];
+    this.students_list = this.students.map(student => {
+      return {
+        code: student.code,
+        fio: student.fio,
+        protocol: student.protocol,
+        result: student.result,
+        ticket: isNullOrUndefined(student.ticket) ? 0 : student.ticket,
+        tickets: isNullOrUndefined(this.tickets) ? null : this.tickets.map(ticket => ticket.number)
+      };
+    });
   }
 
 }

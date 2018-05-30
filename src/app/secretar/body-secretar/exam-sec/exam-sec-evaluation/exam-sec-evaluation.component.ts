@@ -233,6 +233,7 @@ export class ExamSecEvaluationComponent implements OnInit, OnChanges {
     this.students_list = this.students_local
       .map(
         student => {
+          this.student_info = {};
           if ( !this.comission_person.fio.includes(student.comission) ) {
             this.student_info = {
               ticket: '',
